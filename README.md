@@ -1,2 +1,2 @@
 # Summer_Web
-Jarrett's Repository for Summer Web Programming 2022
+Jarrett's Basic Example Repository for Summer Web Programming 2022
