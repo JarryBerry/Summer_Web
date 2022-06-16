@@ -11,11 +11,7 @@ def get_index():
 def get_hello():
     return render_template('hello.html', name="Jarrett")
 
+
 @app.route("/not_jarrett")
 def get_notHello():
     return render_template('hello.html', name="Santa")
-
-@app.route("hi")
-def get_hi():
-    return render_template('hello.html', name="Dorothy")
-    
