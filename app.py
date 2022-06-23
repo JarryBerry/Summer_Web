@@ -39,3 +39,7 @@ def get_logout():
     global username
     username = None
     return redirect(url_for('get_login'))
+
+@app.route("/register")
+def get_register():
+    return render_template('register.html')
