@@ -8,8 +8,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key="ksmdflkji240[i2hjfsklnf"
 
-username = "stranger"
-
 @app.route("/")
 @app.route("/home")
 def get_index():
