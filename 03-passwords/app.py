@@ -37,9 +37,13 @@ def get_login():
 def post_login():
     username = request.form.get("username", None)
     if username != None:
+        session['username'] = username
+        return redirect(url_for('get_index'))
+    else:
         return redirect(url_for('get_login'))
+
     try:
-        with(f"storage/{username}.json", "r") as f:
+        with(f"storage/{username}.json","r") as f:
             creds = json.load(f)
     except Exception as e:
         print(f"Error in reading credentials! {e}")
@@ -48,17 +52,19 @@ def post_login():
     if not check_password_hash(creds['password'], password):
         print(f"Error - Bad password!")
         return redirect(url_for('get_login'))
-    session['username'] = username
-    return redirect(url_for('get_index'))
+
+        return redirect(url_for('get_index'))
 
 @app.route("/logout", methods=['GET'])
 def get_logout():
-    session.pop('username',None)
+    global username
+    username = None
     return redirect(url_for('get_login'))
 
 @app.route("/register", methods=['GET'])
 def get_register():
     if 'username' in session:
+
         return redirect(url_for('get_index'))
     return render_template('register.html')
 
@@ -68,7 +74,7 @@ def post_register():
     if username == None:
         return redirect(url_for('get_register'))
     for c in username.lower():
-        if not(c.isalpha() or c.isdigit() or (c in '.-_')):
+        if not((c.isalpha() or c.isdigitc) or (c in '.-_')):
             print("Illegal characters in username!")
             return redirect(url_for('get_register'))
     password = request.form.get("password", None)
@@ -83,15 +89,15 @@ def post_register():
     if repeated != password:
         print("Repeated password does not match password!")
         return redirect(url_for('get_register'))
-
     # TODO: Do we have a user with this name already?
     try:
-        with open(f"storage/{username}.json", "r") as f:
+        with(f"storage/{username}.json","r") as f:
             creds = json.load(f)
             print("User already exists!")
-            return redirect(url_for('get_register'))
+            return redirect(url_for('get_index'))
     except Exception as e:
-        pass
+        print(f"Error in reading credentials! {e}")
+        return redirect(url_for('get_login'))
 
     # TODO: Store the user credentials
     creds = {
