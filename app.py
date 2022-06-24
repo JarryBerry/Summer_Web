@@ -2,10 +2,12 @@ from flask import Flask, session
 from flask import render_template
 from flask import request, redirect, url_for
 import json
-import werkzeug
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.config['ENV'] = 'development'
+app.config['DEBUG'] = True
+app.config['TESTING'] = True
 app.secret_key="ksmdflkji240[i2hjfsklnf"
 
 @app.route("/")
@@ -84,7 +86,7 @@ def get_login():
 @app.route("/login", methods=['POST'])
 def post_login():
     username = request.form.get("username", None)
-    if username != None:
+    if username == None:
         return redirect(url_for('get_login'))
     try:
         with open(f"storage/{username}.json", "r") as f:
