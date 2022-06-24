@@ -39,7 +39,7 @@ def post_login():
     if username != None:
         return redirect(url_for('get_login'))
     try:
-        with(f"storage/{username}.json", "r") as f:
+        with open(f"storage/{username}.json", "r") as f:
             creds = json.load(f)
     except Exception as e:
         print(f"Error in reading credentials! {e}")
