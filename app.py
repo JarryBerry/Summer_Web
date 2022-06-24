@@ -27,7 +27,7 @@ def get_other():
 
 @app.route("/login", methods=['GET'])
 def get_login():
-    if username in session:
+    if 'username' in session:
         return redirect(url_for('get_index'))
     return render_template('login.html')
 
