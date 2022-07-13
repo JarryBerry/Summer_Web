@@ -1,0 +1,30 @@
+<html>
+    <body>
+        <h1>Shopping List</h1>
+        <hr/>
+        <table id="listTable">
+        </table>
+        <p id="temp"></p>
+        <hr/>
+        <button type="button" onclick="insert_data()">Insert Data</button>
+        <hr/>
+    </body>
+    <script>
+        function insert_data(){
+            listTable = document.getElementById('listtable')
+            listTable.innerHTML = "<tr><td>example11</td><td>example12</td></tr>" + "<tr><td>example21</td><td>example22</td></tr>"
+            tempParagraph = document.getElementById('temp')
+            tempParagraph.innerHTML = "temp";
+            xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                // What to do when the response is ready
+                tempParagraph.innerHTML = xhttp.responseText;
+                data = JSON.parse(xhttp.responseText)
+                console.log(data);
+            }
+            xhttp.open("GET", "/data");
+            xhttp.send();
+            console.log("waiting for response from ajax call");
+        }
+    </script>
+</html>
