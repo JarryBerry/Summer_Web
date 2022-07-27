@@ -2,40 +2,54 @@ from flask import Flask
 from flask import render_template
 from flask import request, redirect, url_for
 from bson.objectid import ObjectId
+import requests
 
 from mongita import MongitaClientDisk
 db_server = MongitaClientDisk(host="./.mongita")
 
+openweathermap_api = "d50eff25b26c42b28e6762a9c0b3cad5"
+
+lat = 41.15
+lon = -81.36
+
+openweathermap_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={openweathermap_api}"
+print(openweathermap_url)
+
+def temp_f(temp_k):
+    return temp_k * 9.0/5.0 - 459.67
+
 app = Flask(__name__)
+
+@app.route("/map")
+def get_map():
+    result = requests.get(openweathermap_url)
+    data = result.json()
+    temp = temp_f(data['main']['temp'])
+    print("The temp in Kent is ", temp)
+    if temp < 30:
+        color="blue"
+    elif temp < 60:
+        color="green"
+    elif temp < 90:
+        color="yellow"
+    else:
+        color="red"
+    return render_template('map.html', temp=int(temp), color=color)
 
 @app.route("/")
 def get_list():
-    #shopping_db = db_server.shopping_db
-    #shopping_list = shopping_db.shopping_list
+    shopping_db = db_server.shopping_db
+    shopping_list = shopping_db.shopping_list
 
-    #the_list = list(shopping_list.find({}))
+    the_list = list(shopping_list.find({}))
 
-    #print(the_list)
+    print(the_list)
 
-    return render_template('list.html')
+    return render_template('list.html', list=the_list)
 
 @app.route("/add_item", methods=["GET"])
 def get_add_item():
     return render_template('add_item.html')
-
-@app.route("/data")
-def get_data():
-    data = {"data":[
-    {
-        "_id": "asdafga",
-        "desc": "apples",
-    },
-    {
-        "_id": "sdfsdf",
-        "desc": "oranges",
-    },
-    ]}
-    return data
 
 @app.route("/add_item", methods=["POST"])
 def post_add_item():
@@ -75,3 +89,7 @@ def post_update_item():
     shopping_list.update_one({'_id':_id},{"$set" : {"desc":desc}})
 
     return redirect(url_for('get_list'))
+
+@app.route('/<path:path>')
+def static_file(path):
+    return app.send_static_file(path)

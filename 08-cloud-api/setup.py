@@ -13,6 +13,7 @@ shopping_list.insert_one({"description":"cookies"})
 shopping_list.insert_one({"description":"hot dogs"})
 shopping_list.insert_one({"description":"mustard"})
 
+
 items = list(shopping_list.find({}))
 items = [item['desc'] for item in items]
 print(items)

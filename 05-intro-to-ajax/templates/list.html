@@ -18,9 +18,11 @@
             xhttp = new XMLHttpRequest();
             xhttp.onload = function(){
                 // What to do when the response is ready
-                tempParagraph.innerHTML = xhttp.responseText;
-                data = JSON.parse(xhttp.responseText)
-                console.log(data);
+                responseText = xhttp.responseText;
+                console.log(responseText)
+                tempParagraph.innerHTML = responseText
+                data = JSON.parse(responseText)
+                console.log(data)
             }
             xhttp.open("GET", "/data");
             xhttp.send();
