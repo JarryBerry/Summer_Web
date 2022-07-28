@@ -1,13 +1,16 @@
-name: example_workflow
+name: Example Workflow
 
 on:
+  push:
+    branches: ['main']
+    
   workflow_dispatch:
 
 jobs:
   example_job:
     runs-on: ubuntu-latest
     steps: 
-    
+
       - name: Say Hello
         run: |
           echo Hello!
