@@ -3,7 +3,7 @@ name: Example Workflow
 on:
   push:
     branches: ['main']
-    
+
   workflow_dispatch:
 
 jobs:
@@ -15,6 +15,13 @@ jobs:
         run: |
           echo Hello!
         
+      - name: Look Around
+        run: |
+          echo '$ pwd'
+          pwd
+          echo '$ ls -la'
+          ls -la
+
       - name: Say Goodbye
         run: |
           echo Goodbye!
