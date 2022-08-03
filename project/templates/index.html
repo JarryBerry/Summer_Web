@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>Jarrett's Fact Generator</title>
+  </head>
+  <body style="text-align:center">
+    <h1 style="color: blueviolet;">Welcome to the FACT GENERATOR!!!!!</h1>
+    <br>
+    <p id="new-fact">This is where the fact goes.</p>
+    <br>
+    <button id="show-fact">New Fact</button>
+  </body>
+  <script>
+    var factHolder = document.getElementById("new-fact");
+    var factButton = document.getElementById("show-fact");
+
+    // Fact List from mental floss amzaing facts https://www.mentalfloss.com/amazingfactgenerator
+    var ListFacts = [
+                "The swirling blue shades of the Marble Caves in Chile are a reflection of the turquoise lake waters below them. The hues change subtly as sea levels fall and rise.",
+                "Queen Elizabeth II technically owns all the dolphins in UK waters.",
+                "The most popular Father’s Day gift is a necktie.",
+                "Spiders recycle webs by eating them.",
+                "Ben and Jerry originally wanted to start a bagel company. The partners ended up in the ice cream business because they couldn’t afford a bagel machine.",
+                "The Starry Night depicts Vincent Van Gogh's view from the Saint Paul-de-Mausole asylum.",
+                "A group of ferrets is called a business.",
+                "Almonds and peaches are members of the same family.",
+                "Newborn elephants suck their trunks for comfort.",
+                "According to a Japanese study, looking at cute animal pictures can boost your focus.",
+                "On Scooby-Doo, Shaggy’s real name is Norville Rogers.",
+                "The three dots on the Domino's logo represent the chain's three original locations. Co-founder Tom Monaghan originally planned to add a new dot for every pizzeria he opened.",
+                "When feeding, a hummingbird can lick 10 to 15 times per second."
+              ];
+
+    var factNumber;
+
+    function giveFact(){
+      return ListFacts[factNumber];
+    }
+
+    factButton.addEventListener("click", function(){
+      factNumber = Math.floor(Math.random() * ListFacts.length);
+      factHolder.textContent = giveFact();
+    });
+  </script>
+</html>

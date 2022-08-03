@@ -4,18 +4,18 @@ from flask import request, redirect, url_for
 from bson.objectid import ObjectId
 
 from mongita import MongitaClientDisk
-client = MongitaClientDisk(host="./.mongita")
+db_server = MongitaClientDisk(host="./.mongita")
 
 app = Flask(__name__)
 
 @app.route("/")
 def get_list():
-    #shopping_db = db_server.shopping_db
-    #shopping_list = shopping_db.shopping_list
+    shopping_db = db_server.shopping_db
+    shopping_list = shopping_db.shopping_list
 
-    #the_list = list(shopping_list.find({}))
+    the_list = list(shopping_list.find({}))
 
-    #print(the_list)
+    print(the_list)
 
     return render_template('list.html', list=the_list)
 
@@ -39,7 +39,7 @@ def get_data():
 
 @app.route("/add_item", methods=["POST"])
 def post_add_item():
-    item = request.form.get("desc", "<missing desc>")
+    desc = request.form.get("desc", "<missing desc>")
     print("adding ",desc)
     shopping_db = db_server.shopping_db
     shopping_list = shopping_db.shopping_list
